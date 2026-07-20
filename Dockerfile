@@ -1,9 +1,12 @@
 FROM caddy:2.10.2 AS caddy
 
 FROM node:22-bookworm-slim AS build
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends python3 make g++ \
+  && rm -rf /var/lib/apt/lists/*
 RUN npm install --global pnpm@10.32.1
 WORKDIR /app
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm build
@@ -15,6 +18,9 @@ ENV MEDIA_ROOT=/data/uploads
 ENV COLLABORATION_PORT=1234
 ENV COLLAB_INTERNAL_URL=http://127.0.0.1:1234/internal/restore
 ENV APP_TIMEZONE=Asia/Shanghai
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends procps \
+  && rm -rf /var/lib/apt/lists/*
 RUN npm install --global pnpm@10.32.1
 WORKDIR /app
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
