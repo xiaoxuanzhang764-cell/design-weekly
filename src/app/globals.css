@@ -1,0 +1,68 @@
+:root {
+  --color-gallery: oklch(0.09 0 0);
+  --color-gallery-raised: oklch(0.16 0.008 265);
+  --color-app: oklch(0.95 0.004 265);
+  --color-document: oklch(1 0 0);
+  --color-ink: oklch(0.19 0.01 265);
+  --color-ink-inverse: oklch(0.97 0 0);
+  --color-muted: oklch(0.48 0.012 265);
+  --color-border: oklch(0.86 0.006 265);
+  --color-primary: oklch(0.55 0.119 160);
+  --color-accent: oklch(0.61 0.19 264);
+  --color-danger: oklch(0.58 0.18 28);
+  --color-cta: oklch(0.43 0.16 264);
+  --color-cta-hover: oklch(0.38 0.14 264);
+
+  /* Shared application token interface established by Task 1. */
+  --surface-dark: oklch(0.15 0.008 265);
+  --surface-dark-raised: oklch(0.20 0.01 265);
+  --surface-app: var(--color-app);
+  --surface-document: oklch(0.99 0 0);
+  --ink: var(--color-ink);
+  --ink-on-dark: oklch(0.97 0.003 265);
+  --muted: oklch(0.49 0.012 265);
+  --accent: var(--color-accent);
+  --border: var(--color-border);
+  --radius-card: 12px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  color: var(--color-ink);
+  background: var(--color-app);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
