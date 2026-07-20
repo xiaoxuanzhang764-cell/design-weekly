@@ -73,6 +73,23 @@ describe('Railway deployment contract', () => {
     expect(packageJson.dependencies.tsx).toBeTruthy()
   })
 
+  it('builds native SQLite bindings and can stop the Railway process tree', () => {
+    const dockerfile = read('Dockerfile')
+    const workspaceCopy = dockerfile.indexOf(
+      'COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./',
+    )
+    const install = dockerfile.indexOf('RUN pnpm install --frozen-lockfile')
+
+    expect(workspaceCopy).toBeGreaterThan(-1)
+    expect(workspaceCopy).toBeLessThan(install)
+    expect(dockerfile).toContain(
+      'apt-get install -y --no-install-recommends python3 make g++',
+    )
+    expect(dockerfile).toContain(
+      'apt-get install -y --no-install-recommends procps',
+    )
+  })
+
   it('excludes environment files except the checked-in example', () => {
     const dockerignore = read('.dockerignore')
       .split('\n')
