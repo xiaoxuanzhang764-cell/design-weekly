@@ -9,6 +9,9 @@ WORKDIR /app
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
+RUN base64 -d deployment.tar.gz.b64 > /tmp/deployment.tar.gz \
+  && tar -xzf /tmp/deployment.tar.gz -C /app \
+  && rm -f /tmp/deployment.tar.gz deployment.tar.gz.b64
 RUN pnpm build
 
 FROM node:22-bookworm-slim AS runtime
